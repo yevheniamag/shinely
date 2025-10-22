@@ -1,0 +1,37 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 80px; 
+  background-color: #F0EDE8;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700; 
+  letter-spacing: 0.1em;
+  color: #333;
+}
+
+.navigation {
+  display: flex;
+  gap: 30px; 
+}
+
+.navigation span {
+  text-decoration: none;
+  color: #4C4B40;
+  font-weight: 500; 
+  cursor: pointer;
+}
+
+.navigation span:first-child {
+  font-weight: 700; 
+}
+
+.authButtons {
+  display: flex;
+  gap: 10px;
+}

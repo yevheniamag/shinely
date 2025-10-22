@@ -1,0 +1,27 @@
+.btn {
+  border-radius: 20px; 
+  padding: 10px 24px;
+  
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600; 
+  font-family: 'Montserrat', sans-serif; 
+  transition: all 0.2s ease;
+}
+
+.dark {
+  background-color: #4C4B40;
+  color: #FFFFFF;
+}
+.dark:hover {
+  background-color: #6a695c; 
+}
+
+.light {
+  background-color: #F8D99A;
+  color: #4C4B40;
+}
+.light:hover {
+  background-color: #f7d180; 
+}
