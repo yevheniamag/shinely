@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,7 +7,17 @@
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
-  background-color: #FCF9F4; 
-  color: #4C4B40;          
+  font-family: 'Nanum Myeongjo', serif;
+  background-color: #fcf9f6;
+  color: #4c4b40;
+  overflow-x: hidden;
+}
+
+body.modal-open {
+  overflow-y: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }

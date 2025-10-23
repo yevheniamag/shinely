@@ -1,0 +1,136 @@
+.pageContainer {
+  background-color: #fffceb;
+  padding: 40px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.filterSection {
+  max-width: 1300px;
+  margin: 0 auto 80px auto;
+  border-radius: 30px;
+  overflow: hidden;
+  position: relative;
+  padding: 80px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+  box-sizing: border-box;
+}
+
+.filterSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/selection.png');
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+.filterSection > * {
+  position: relative;
+  z-index: 2;
+}
+
+.title {
+  font-size: 38px;
+  font-weight: 500;
+  color: #85c7e3;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.descriptionContainer {
+  background-color: rgba(132, 128, 124, 0.3);
+  padding: 25px 40px;
+  border-radius: 20px;
+  max-width: 900px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.description {
+  color: #f0f0f0;
+  font-size: 16px;
+  line-height: 1.7;
+  text-align: center;
+  margin: 0;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+}
+
+.filterButton {
+  background-color: #f1f0ec;
+  color: #5b5550;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 25px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.filterButton:hover {
+  transform: scale(1.03);
+}
+
+.submitButton {
+  background-color: #8a8974 !important;
+  color: #fcf9f6 !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 15px 50px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.submitButton:hover {
+  background-color: #797865 !important;
+}
+
+.resultsContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.categorySection {
+  background-color: #dde1e3;
+  border-radius: 30px;
+  padding: 40px;
+  margin-bottom: 40px;
+}
+
+.categoryTitle {
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+  color: #4c4b40;
+  letter-spacing: 4px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+
+.productList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}

@@ -11,7 +11,7 @@
 }
 
 .dark {
-  background-color: #4C4B40;
+  background-color: #4A4F26;
   color: #FFFFFF;
 }
 .dark:hover {
@@ -19,8 +19,8 @@
 }
 
 .light {
-  background-color: #F8D99A;
-  color: #4C4B40;
+  background-color: #4A4F26;
+  color: #ffffff;
 }
 .light:hover {
   background-color: #f7d180; 
