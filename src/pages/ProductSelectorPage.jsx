@@ -2,15 +2,24 @@ import styles from './ProductSelectorPage.module.css';
 import ProductCard from '../components/common/ProductCard/ProductCard';
 import Button from '../components/common/Button/Button';
 import shampoo1 from '../assets/shampoo-1.png';
+import shampoo2 from '../assets/shampoo-2.png';
+import shampoo3 from '../assets/shampoo-3.png';
+import shampoo4 from '../assets/shampoo-4.png';
+import shampoo5 from '../assets/shampoo-5.png';
+import conditioner1 from '../assets/conditioner-1.png';
+import conditioner2 from '../assets/conditioner-2.png';
 import conditioner3 from '../assets/conditioner-3.png';
 import mask1 from '../assets/mask-1.png';
+import mask2 from '../assets/mask-2.png';
 import oil1 from '../assets/oil-1.png';
+import oil2 from '../assets/oil-2.png';
+import spray1 from '../assets/spray-1.png';
 
 const products = {
   shampoos: [
     {
       id: 1,
-      image: '/assets/shampoo-1.png',
+      image: shampoo2,
       name: 'Redken Volume Injection Shampoo',
     },
     {
@@ -20,25 +29,25 @@ const products = {
     },
     {
       id: 3,
-      image: '/images/shampoo-3.png',
+      image: shampoo3,
       name: 'Matrix Food For Soft Hydrating',
     },
-    { id: 4, image: '/images/shampoo-4.png', name: 'Davines Minu Shampoo' },
+    { id: 4, image: shampoo4, name: 'Davines Minu Shampoo' },
     {
       id: 5,
-      image: '/images/shampoo-5.png',
+      image: shampoo5,
       name: 'Vichy Dercos Anti-Dandruff',
     },
   ],
   conditioners: [
     {
       id: 6,
-      image: '/images/conditioner-1.png',
+      image: conditioner1,
       name: 'Moisture & More Conditioner',
     },
     {
       id: 7,
-      image: '/images/conditioner-2.png',
+      image: conditioner2,
       name: 'Tresemme Flawless Waves',
     },
     {
@@ -55,7 +64,7 @@ const products = {
     },
     {
       id: 10,
-      image: '/images/mask-2.png',
+      image: mask2,
       name: 'Brelil Numero Total Repair Mask',
     },
   ],
@@ -63,13 +72,11 @@ const products = {
     { id: 11, image: oil1, name: "La'dor Wonder Hair Oil" },
     {
       id: 12,
-      image: '/images/oil-2.png',
+      image: oil2,
       name: 'CHI Argan Oil Plus Moringa Oil',
     },
   ],
-  sprays: [
-    { id: 13, image: '/images/spray-1.png', name: 'CHI Volume Booster' },
-  ],
+  sprays: [{ id: 13, image: spray1, name: 'CHI Volume Booster' }],
 };
 
 const getCategoryTitle = (category) => {

@@ -1,16 +1,18 @@
 import styles from './FavoritesPage.module.css';
 import ProductCard from '../components/common/ProductCard/ProductCard';
+import fmask1 from '../assets/f-mask1.png';
+import shampoo1 from '../assets/shampoo-1.png';
 
 const favoriteProducts = [
   {
     id: 4,
-    image: 'https://via.placeholder.com/150/FFFF00/000000?Text=Mask1',
+    image: fmask1,
     name: 'Deep Repair Mask',
     type: 'Маска',
   },
   {
     id: 1,
-    image: 'https://via.placeholder.com/150/FF0000/FFFFFF?Text=Shampoo1',
+    image: shampoo1,
     name: 'Herbal Gentle Shampoo',
     type: 'Шампунь',
   },
