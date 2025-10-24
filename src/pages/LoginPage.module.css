@@ -1,0 +1,82 @@
+.pageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  background-color: #fffceb;
+  min-height: calc(100vh - 160px);
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 550px;
+  padding: 50px 70px;
+  background-color: #fbf9f6;
+  border: 1px solid #e0dace;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 25px;
+  font-size: 14px;
+}
+
+.forgotLink {
+  color: #888;
+  text-decoration: none;
+}
+
+.forgotLink:hover {
+  text-decoration: underline;
+}
+
+.form button {
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+  background-color: #ffffff;
+  color: #4c4b40;
+  border: 1px solid #e0dace;
+}
+
+.form button:hover {
+  background-color: #f7f7f7;
+  border-color: #ccc;
+}
+
+.registerPrompt {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 15px;
+  color: #555;
+}
+
+.registerLink {
+  font-weight: 600;
+  color: #4c4b40;
+  text-decoration: none;
+}
+
+.registerLink:hover {
+  text-decoration: underline;
+}

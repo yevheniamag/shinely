@@ -1,0 +1,128 @@
+.footer {
+  background-color: #e6e3db; /* Світлий бежевий фон, як у дизайні */
+  padding: 40px 250px 30px 80px;
+  border-top: 1px solid #d6d2c4;
+  font-family: 'NanumMyeongjo';
+  color: #4c4b40;
+  position: relative;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* --- Загальні стилі для колонок --- */
+.column {
+  line-height: 1.8;
+  padding-right: 20px;
+  font-size: 14px;
+}
+.column p {
+  margin: 0;
+}
+
+/* --- 1. Колонка Підписки --- */
+.logo {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-bottom: 15px;
+}
+.subscribeText {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.subscribeForm {
+  display: flex;
+  margin-bottom: 20px;
+  width: 100%;
+}
+.emailInput {
+  padding: 10px;
+  border: 1px solid #ccc;
+  flex-grow: 1;
+  font-size: 14px;
+  border-radius: 5px 0 0 5px;
+  box-sizing: border-box;
+}
+.emailButton {
+  padding: 10px 15px;
+  background-color: #9a998c; /* Темно-сіро-зелений */
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border-radius: 0 5px 5px 0;
+  transition: background-color 0.2s ease;
+}
+.emailButton:hover {
+  background-color: #6a695c;
+}
+.copyright {
+  font-size: 12px;
+  color: #888;
+  margin-top: 50px; /* Відступ від форми підписки */
+}
+
+/* --- 2, 3, 4. Інформаційні колонки --- */
+.contactItem {
+  font-weight: 600; /* Напівжирний для контактів */
+}
+
+.navLink {
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.navLink:hover {
+  color: #9a998c;
+}
+
+/* --- Соціальні іконки --- */
+.socialIcons {
+  position: absolute;
+  bottom: 30px;
+  right: 80px;
+  display: flex;
+  gap: 15px;
+  font-size: 20px;
+}
+.iconPlaceholder {
+  cursor: pointer;
+  color: #4c4b40;
+  transition: opacity 0.2s ease;
+}
+.iconPlaceholder:hover {
+  opacity: 0.7;
+}
+.socialIcons {
+  position: absolute;
+  bottom: 30px;
+  right: 80px;
+  display: flex;
+  gap: 15px; /* Відстань між іконками */
+  align-items: center; /* Вирівнюємо іконки по вертикалі */
+}
+
+.iconLink {
+  display: inline-block; /* Потрібно для правильного розміру посилання */
+  line-height: 0; /* Запобігає зайвому простору під зображенням */
+  transition: opacity 0.2s ease;
+}
+
+.iconLink:hover {
+  opacity: 0.7;
+}
+
+/* 3. Стилізуємо саме зображення */
+.socialIconImage {
+  width: 24px; /* Налаштуй розмір за потребою */
+  height: 24px; /* Налаштуй розмір за потребою */
+  object-fit: contain; /* Гарантує, що іконка вміститься */
+}
