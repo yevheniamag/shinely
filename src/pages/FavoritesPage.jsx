@@ -1,48 +1,40 @@
 import styles from './FavoritesPage.module.css';
-import ProductCard from '../components/common/ProductCard/ProductCard';
-import fmask1 from '../assets/f-mask1.png';
+import ProductCard from '../components/common/ProductCard/ProductCard.jsx';
+
 import shampoo1 from '../assets/shampoo-1.png';
+import mask1 from '../assets/mask-1.png';
+import oil2 from '../assets/oil-2.png';
 
 const favoriteProducts = [
   {
-    id: 4,
-    image: fmask1,
-    name: 'Deep Repair Mask',
-    type: 'Маска',
-  },
-  {
-    id: 1,
+    id: 2,
     image: shampoo1,
-    name: 'Herbal Gentle Shampoo',
+    name: 'Herbal Essences Petal Soft',
     type: 'Шампунь',
   },
+  {
+    id: 11,
+    image: mask1,
+    name: "La'dor Eco Hydro LPP Treatment",
+    type: 'Маска',
+  },
+  { id: 17, image: oil2, name: 'CHI Argan Oil Plus Moringa Oil', type: 'Олія' },
 ];
 
 export default function FavoritesPage() {
   return (
-    <div className={styles.favoritesPage}>
-      <section className={styles.titleSection}>
-        <h1>ВПОДОБАНІ ЗАСОБИ</h1>
-        {}
-      </section>
+    <div className={styles.pageContainer}>
+      <h1 className={styles.title}>Вподобані Товари</h1>
 
-      {}
-      <section className={styles.productsSection}>
-        {favoriteProducts.length > 0 ? (
-          <div className={styles.productList}>
-            {favoriteProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                image={product.image}
-                name={product.name}
-                type={product.type}
-              />
-            ))}
-          </div>
-        ) : (
-          <p className={styles.emptyMessage}>Ваш список вподобаних порожній.</p>
-        )}
-      </section>
+      {favoriteProducts.length > 0 ? (
+        <div className={styles.favoritesGrid}>
+          {favoriteProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      ) : (
+        <p className={styles.emptyMessage}>У вас ще немає улюблених товарів.</p>
+      )}
     </div>
   );
 }

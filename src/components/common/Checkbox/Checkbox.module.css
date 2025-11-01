@@ -1,16 +1,15 @@
-/* Контейнер для чекбокса */
+
 .checkboxContainer {
   display: block;
   position: relative;
-  padding-left: 35px; /* Місце для нашого кастомного чекбокса */
+  padding-left: 35px; 
   margin-bottom: 20px;
   cursor: pointer;
   font-size: 16px;
   color: #555;
-  user-select: none; /* Забороняємо виділення тексту */
+  user-select: none; 
 }
 
-/* Ховаємо справжній чекбокс */
 .checkboxContainer input {
   position: absolute;
   opacity: 0;
@@ -19,7 +18,6 @@
   width: 0;
 }
 
-/* Малюємо нашу кастомну "коробку" */
 .checkmark {
   position: absolute;
   top: 0;
@@ -31,25 +29,21 @@
   border-radius: 4px;
 }
 
-/* Коли чекбокс обраний, міняємо фон */
 .checkboxContainer input:checked ~ .checkmark {
-  background-color: #4c4b40; /* Темний, як у твоїх кнопок */
+  background-color: #4c4b40; 
   border-color: #4c4b40;
 }
 
-/* Малюємо "галочку" (V) всередині */
 .checkmark:after {
   content: '';
   position: absolute;
   display: none;
 }
 
-/* Показуємо "галочку", коли обрано */
 .checkboxContainer input:checked ~ .checkmark:after {
   display: block;
 }
 
-/* Стилізація самої "галочки" */
 .checkboxContainer .checkmark:after {
   left: 7px;
   top: 3px;

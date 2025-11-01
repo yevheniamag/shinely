@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
-        {/* --- 1. Колонка: Логотип та Підписка --- */}
+        {}
         <div className={styles.column + ' ' + styles.subscribeColumn}>
           <div className={styles.logo}>S H I N E L Y</div>
           <p className={styles.subscribeText}>
@@ -25,14 +25,14 @@ export default function Footer() {
           <p className={styles.copyright}>&copy; 2025 HairCare Project</p>
         </div>
 
-        {/* --- 2. Колонка: Контакти --- */}
+        {}
         <div className={styles.column}>
           <p className={styles.contactItem}>+38 (099) 234 33 00</p>
           <p className={styles.contactItem}>Haircare@Gmail.Com</p>
           <p className={styles.contactItem}>ЗВОРОТНИЙ ЗВ'ЯЗОК</p>
         </div>
 
-        {/* --- 3. Колонка: Навігація 1 --- */}
+        {}
         <div className={styles.column}>
           <p className={styles.navLink}>ПІДІБРАТИ ЗАСІБ</p>
           <p className={styles.navLink}>ТИПИ ВОЛОССЯ</p>
@@ -40,7 +40,7 @@ export default function Footer() {
           <p className={styles.navLink}>ЧАСТІ ПИТАННЯ (FAQ)</p>
         </div>
 
-        {/* --- 4. Колонка: Навігація 2 --- */}
+        {}
         <div className={styles.column}>
           <p className={styles.navLink}>ПРО НАС</p>
           <p className={styles.navLink}>ПОЛІТИКА КОНФІДЕНЦІЙНОСТІ</p>
@@ -48,9 +48,9 @@ export default function Footer() {
           <p className={styles.navLink}>СПІВПРАЦЯ</p>
         </div>
 
-        {/* --- Іконки Соцмереж --- */}
+        {}
         <div className={styles.socialIcons}>
-          {/* 2. Використовуй теги <img> всередині посилань */}
+          {}
           <a href="#instagram" className={styles.iconLink}>
             <img
               src={instagramIcon}

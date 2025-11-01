@@ -1,5 +1,5 @@
 .footer {
-  background-color: #e6e3db; /* Світлий бежевий фон, як у дизайні */
+  background-color: #e6e3db;
   padding: 40px 250px 30px 80px;
   border-top: 1px solid #d6d2c4;
   font-family: 'NanumMyeongjo';
@@ -14,7 +14,6 @@
   margin: 0 auto;
 }
 
-/* --- Загальні стилі для колонок --- */
 .column {
   line-height: 1.8;
   padding-right: 20px;
@@ -24,7 +23,6 @@
   margin: 0;
 }
 
-/* --- 1. Колонка Підписки --- */
 .logo {
   font-size: 18px;
   font-weight: 700;
@@ -51,7 +49,7 @@
 }
 .emailButton {
   padding: 10px 15px;
-  background-color: #9a998c; /* Темно-сіро-зелений */
+  background-color: #9a998c;
   color: white;
   border: none;
   cursor: pointer;
@@ -67,12 +65,11 @@
 .copyright {
   font-size: 12px;
   color: #888;
-  margin-top: 50px; /* Відступ від форми підписки */
+  margin-top: 50px;
 }
 
-/* --- 2, 3, 4. Інформаційні колонки --- */
 .contactItem {
-  font-weight: 600; /* Напівжирний для контактів */
+  font-weight: 600;
 }
 
 .navLink {
@@ -84,7 +81,6 @@
   color: #9a998c;
 }
 
-/* --- Соціальні іконки --- */
 .socialIcons {
   position: absolute;
   bottom: 30px;
@@ -106,13 +102,13 @@
   bottom: 30px;
   right: 80px;
   display: flex;
-  gap: 15px; /* Відстань між іконками */
-  align-items: center; /* Вирівнюємо іконки по вертикалі */
+  gap: 15px;
+  align-items: center;
 }
 
 .iconLink {
-  display: inline-block; /* Потрібно для правильного розміру посилання */
-  line-height: 0; /* Запобігає зайвому простору під зображенням */
+  display: inline-block;
+  line-height: 0;
   transition: opacity 0.2s ease;
 }
 
@@ -120,9 +116,8 @@
   opacity: 0.7;
 }
 
-/* 3. Стилізуємо саме зображення */
 .socialIconImage {
-  width: 24px; /* Налаштуй розмір за потребою */
-  height: 24px; /* Налаштуй розмір за потребою */
-  object-fit: contain; /* Гарантує, що іконка вміститься */
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }

@@ -1,16 +1,15 @@
 import Header from './Header/Header';
-import Footer from './Footer';
-import HeaderStyles from './Header/Header.module.css'; // <-- Цей імпорт важливий!
+import Footer from './Footer.jsx';
+import { Outlet } from 'react-router-dom';
+import styles from './Layout.module.css';
 
-export default function Layout({ children }) {
+export default function Layout() {
   return (
-    <div className="layout-wrapper">
-      {/* ВИКОРИСТОВУЄМО КЛАС З МОДУЛЯ Header.module.css */}
-      <div className={HeaderStyles.headerWrapper}>
-        <Header />
-      </div>
-
-      <main className="main-content">{children}</main>
+    <div className={styles.layoutWrapper}>
+      <Header />
+      <main className={styles.mainContent}>
+        <Outlet />
+      </main>
       <Footer />
     </div>
   );
