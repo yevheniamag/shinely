@@ -12,6 +12,7 @@ import RegistrationPage from './pages/RegistrationPage.jsx';
 import AboutUsPage from './pages/AboutUsPage.jsx';
 import FavoritesPage from './pages/FavoritesPage.jsx';
 import ProductInfoPage from './pages/ProductInfoPage.jsx';
+import NotFoundPage from './pages/NotFoundPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -24,11 +25,13 @@ const router = createBrowserRouter([
       { path: 'register', element: <RegistrationPage /> },
       { path: 'about', element: <AboutUsPage /> },
       { path: 'favorites', element: <FavoritesPage /> },
-      {
-        path: 'product-info',
-        element: <ProductInfoPage />,
-      },
+      { path: 'product-info', element: <ProductInfoPage /> },
     ],
+  },
+
+  {
+    path: '*',
+    element: <NotFoundPage />,
   },
 ]);
 
