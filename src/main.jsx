@@ -13,6 +13,7 @@ import AboutUsPage from './pages/AboutUsPage.jsx';
 import FavoritesPage from './pages/FavoritesPage.jsx';
 import ProductInfoPage from './pages/ProductInfoPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 const router = createBrowserRouter([
   {
@@ -24,11 +25,18 @@ const router = createBrowserRouter([
       { path: 'login', element: <LoginPage /> },
       { path: 'register', element: <RegistrationPage /> },
       { path: 'about', element: <AboutUsPage /> },
-      { path: 'favorites', element: <FavoritesPage /> },
       { path: 'product-info', element: <ProductInfoPage /> },
+
+      {
+        path: 'favorites',
+        element: (
+          <ProtectedRoute>
+            <FavoritesPage />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
-
   {
     path: '*',
     element: <NotFoundPage />,
