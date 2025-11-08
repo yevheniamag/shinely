@@ -1,33 +1,21 @@
-/* 1. Головний контейнер (рамка з бежевим фоном) */
 .headerWrapper {
-  /* ФОН ТВОГО ОСНОВНОГО ДИЗАЙНУ */
   background-color: #fffceb;
-  /* Додаємо ВЕРТИКАЛЬНИЙ ВІДСТУП: 33px згори та знизу */
-  padding: 33px 0;
+  padding: 15px 0;
   width: 100%;
   box-sizing: border-box;
 }
 
-/* 2. Сама шапка (сіра смуга з округленими краями) */
 .header {
   background-color: #c3c4b9;
   border-radius: 50px;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  /* Додаємо ГОРИЗОНТАЛЬНИЙ ВІДСТУП: 45px зліва та справа */
-  padding: 10px 45px;
-
-  /* Обмежуємо ширину з урахуванням нових відступів */
-  max-width: 1420px; /* 1200px + 2*45px */
-
-  /* Центруємо шапку в обгортці */
+  padding: 15px 45px;
+  max-width: 1400px;
   margin: 0 auto;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
-
-/* --- Навігація та Логотип (Решта стилів без змін) --- */
 
 .logo {
   font-size: 24px;
