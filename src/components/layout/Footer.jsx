@@ -1,5 +1,5 @@
 import styles from './Footer.module.css';
-
+import { Link } from 'react-router-dom';
 import instagramIcon from '../../assets/instagram.png';
 import facebookIcon from '../../assets/facebook.png';
 import tiktokIcon from '../../assets/tiktok.png';
@@ -33,39 +33,48 @@ export default function Footer() {
         </div>
 
         {}
-        <div className={styles.column}>
-          <p className={styles.navLink}>ПІДІБРАТИ ЗАСІБ</p>
-          <p className={styles.navLink}>ТИПИ ВОЛОССЯ</p>
-          <p className={styles.navLink}>ПОРАДИ З ДОГЛЯДУ</p>
-          <p className={styles.navLink}>ЧАСТІ ПИТАННЯ (FAQ)</p>
-        </div>
 
         {}
         <div className={styles.column}>
-          <p className={styles.navLink}>ПРО НАС</p>
+          <Link to="/about" className={styles.navLink}>
+            ПРО НАС
+          </Link>
           <p className={styles.navLink}>ПОЛІТИКА КОНФІДЕНЦІЙНОСТІ</p>
-          <p className={styles.navLink}>УМОВИ ВИКОРИСТАННЯ</p>
-          <p className={styles.navLink}>СПІВПРАЦЯ</p>
         </div>
 
         {}
         <div className={styles.socialIcons}>
           {}
-          <a href="#instagram" className={styles.iconLink}>
+          <a
+            href="https://www.instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.iconLink}
+          >
             <img
               src={instagramIcon}
               alt="Instagram"
               className={styles.socialIconImage}
             />
           </a>
-          <a href="#facebook" className={styles.iconLink}>
+          <a
+            href="https://www.facebook.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.iconLink}
+          >
             <img
               src={facebookIcon}
               alt="Facebook"
               className={styles.socialIconImage}
             />
           </a>
-          <a href="#tiktok" className={styles.iconLink}>
+          <a
+            href="https://www.tiktok.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.iconLink}
+          >
             <img
               src={tiktokIcon}
               alt="TikTok"

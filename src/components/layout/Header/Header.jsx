@@ -1,11 +1,19 @@
-import { Link, NavLink } from 'react-router-dom';
-import Button from '../../common/Button/Button';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import Button from '../../common/Button/Button.jsx';
 import styles from './Header.module.css';
+import { useAuth } from '../../../context/AuthContext.jsx';
 
 export default function Header() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
   return (
     <div className={styles.headerWrapper}>
-      {}
       <header className={styles.header}>
         <Link to="/" className={styles.logo}>
           SHINELY
@@ -55,12 +63,20 @@ export default function Header() {
         </nav>
 
         <div className={styles.authButtons}>
-          <Link to="/login">
-            <Button variant="dark">Увійти</Button>
-          </Link>
-          <Link to="/register">
-            <Button variant="primary">Зареєструватися</Button>
-          </Link>
+          {user ? (
+            <Button variant="dark" onClick={handleLogout}>
+              Вийти
+            </Button>
+          ) : (
+            <>
+              <Link to="/login">
+                <Button variant="dark">Увійти</Button>
+              </Link>
+              <Link to="/register">
+                <Button variant="primary">Зареєструватися</Button>
+              </Link>
+            </>
+          )}
         </div>
       </header>
     </div>
