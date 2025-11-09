@@ -1,20 +1,15 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import * as AuthUtils from './authUtils.js';
 
-// Стиль зі зразка: createContext()
 const AuthContext = createContext();
 
-// Стиль зі зразка: іменований export
 export function AuthProvider({ children }) {
-  // Вся логіка з твого першого файлу
   AuthUtils.initializeUsers();
 
   const [user, setUser] = useState(AuthUtils.getInitialUser);
 
-  // Додано зі зразка
   const isLoggedIn = user !== null;
 
-  // Логіка з твого першого файлу
   useEffect(() => {
     if (user) {
       localStorage.setItem(AuthUtils.CURRENT_USER_KEY, JSON.stringify(user));
@@ -23,7 +18,6 @@ export function AuthProvider({ children }) {
     }
   }, [user]);
 
-  // Логіка з твого першого файлу
   const login = async (email, password) => {
     await AuthUtils.simulateFetchPost();
 
@@ -38,7 +32,6 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // Логіка з твого першого файлу
   const register = async (email, password, name) => {
     await AuthUtils.simulateFetchPost();
 
@@ -67,12 +60,10 @@ export function AuthProvider({ children }) {
     return { success: true };
   };
 
-  // Логіка з твого першого файлу
   const logout = () => {
     setUser(null);
   };
 
-  // Логіка з твого першого файлу
   const toggleFavorite = async (productId) => {
     if (!user) return;
 
@@ -98,10 +89,9 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // Оновлене значення value (додано isLoggedIn)
   const value = {
     user,
-    isLoggedIn, // Додано
+    isLoggedIn,
     login,
     register,
     logout,
@@ -111,8 +101,6 @@ export function AuthProvider({ children }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-// --- ВИПРАВЛЕННЯ ---
-// Стиль зі зразка: коментар та розширена версія useAuth
 // eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
   const context = useContext(AuthContext);
