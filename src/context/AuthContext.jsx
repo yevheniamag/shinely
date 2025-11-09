@@ -1,9 +1,12 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import * as AuthUtils from './authUtils.js';
 
+// Стиль зі зразка: createContext()
 const AuthContext = createContext();
 
+// Стиль зі зразка: іменований export
 export function AuthProvider({ children }) {
+  // Вся логіка з твого першого файлу
   AuthUtils.initializeUsers();
 
   const [user, setUser] = useState(AuthUtils.getInitialUser);
