@@ -55,12 +55,11 @@ export default function ProductSelectorPage() {
     type: null,
   });
   const [filteredProducts, setFilteredProducts] = useState(null);
-
   const {
     data: allProducts,
     isLoading,
     error,
-  } = useFetchData('/products.json');
+  } = useFetchData('http://localhost:3004/products');
 
   const handleSelectFilter = (filterName, value) => {
     setSelectedFilters((prev) => ({

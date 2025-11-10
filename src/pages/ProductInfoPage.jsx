@@ -14,13 +14,14 @@ export default function ProductInfoPage() {
     data: allProducts,
     isLoading,
     error,
-  } = useFetchData('/products.json');
+  } = useFetchData('http://localhost:3004/products');
 
   const product = useMemo(() => {
     if (!allProducts) {
       return null;
     }
-    return allProducts.find((p) => p.id === parseInt(productId));
+
+    return allProducts.find((p) => p.id === productId);
   }, [allProducts, productId]);
 
   const isFavorite = user?.favorites.includes(product?.id);
@@ -105,7 +106,7 @@ export default function ProductInfoPage() {
 
           {product.hairType && (
             <div className={styles.infoBlock}>
-              <h3 className={styles.sectionTitle}>Тип волосся</h3>
+              <h3 classNameMame={styles.sectionTitle}>Тип волосся</h3>
               <p className={styles.hairType}>{product.hairType}</p>
             </div>
           )}

@@ -14,8 +14,9 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = await login(email, password);
-    if (success) {
+    const result = await login(email, password);
+
+    if (result.success) {
       navigate('/');
     }
   };
@@ -25,6 +26,7 @@ export default function LoginPage() {
       <div className={styles.formContainer}>
         <h2 className={styles.title}>Вхід до кабінету</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
+          {/* ...решта JSX... */}
           <Input
             label="Email *"
             type="email"

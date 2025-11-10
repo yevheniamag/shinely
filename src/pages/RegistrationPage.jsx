@@ -22,8 +22,10 @@ export default function RegistrationPage() {
       alert('Паролі не співпадають!');
       return;
     }
-    const success = await register(email, password, firstName, lastName);
-    if (success) {
+
+    const result = await register(email, password, firstName, lastName);
+
+    if (result.success) {
       navigate('/');
     }
   };

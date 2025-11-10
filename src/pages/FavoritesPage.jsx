@@ -13,7 +13,7 @@ export default function FavoritesPage() {
     data: allProducts,
     isLoading,
     error,
-  } = useFetchData('/products.json');
+  } = useFetchData('http://localhost:3004/products');
 
   const favoriteProducts = useMemo(() => {
     if (!user || !allProducts) {

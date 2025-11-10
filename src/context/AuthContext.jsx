@@ -1,63 +1,80 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import * as AuthUtils from './authUtils.js';
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
+const USERS_API_URL = 'http://localhost:3004/users';
+const CURRENT_USER_KEY = 'shinely-current-user';
+
+const getInitialUser = () => {
+  const user = localStorage.getItem(CURRENT_USER_KEY);
+  return user ? JSON.parse(user) : null;
+};
 
 export function AuthProvider({ children }) {
-  AuthUtils.initializeUsers();
-
-  const [user, setUser] = useState(AuthUtils.getInitialUser);
-
-  const isLoggedIn = user !== null;
+  const [user, setUser] = useState(getInitialUser);
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem(AuthUtils.CURRENT_USER_KEY, JSON.stringify(user));
+      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
     } else {
-      localStorage.removeItem(AuthUtils.CURRENT_USER_KEY);
+      localStorage.removeItem(CURRENT_USER_KEY);
     }
   }, [user]);
 
   const login = async (email, password) => {
-    await AuthUtils.simulateFetchPost();
+    try {
+      const response = await fetch(`${USERS_API_URL}?email=${email}`);
 
-    const currentUsers = AuthUtils.getUsersFromStorage();
-    const foundUser = currentUsers.find((u) => u.email === email);
+      if (!response.ok) {
+        return { success: false, message: 'Помилка сервера при вході.' };
+      }
 
-    if (foundUser && foundUser.password === password) {
-      setUser(foundUser);
-      return { success: true };
-    } else {
-      return { success: false, message: 'Неправильний email або пароль' };
+      const users = await response.json();
+      const foundUser = users[0];
+
+      if (foundUser && foundUser.password === password) {
+        setUser(foundUser);
+        return { success: true };
+      } else {
+        return { success: false, message: 'Неправильний email або пароль' };
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      alert(
+        "Помилка з'єднання. Перевірте, чи запущено json-server (npm run server)."
+      );
+      return { success: false, message: "Помилка з'єднання." };
     }
   };
 
+  /* eslint-disable react-refresh/only-export-components */
   const register = async (email, password, name) => {
-    await AuthUtils.simulateFetchPost();
+    try {
+      const checkResponse = await fetch(`${USERS_API_URL}?email=${email}`);
+      const existingUsers = await checkResponse.json();
+      if (existingUsers.length > 0) {
+        return { success: false, message: 'Цей email вже зареєстрований!' };
+      }
 
-    const currentUsers = AuthUtils.getUsersFromStorage();
-    const isEmailTaken = currentUsers.some((u) => u.email === email);
+      const newUser = { email, password, name, favorites: [] };
 
-    if (isEmailTaken) {
-      return { success: false, message: 'Цей email вже зареєстрований!' };
+      const postResponse = await fetch(USERS_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newUser),
+      });
+
+      if (postResponse.ok) {
+        const createdUser = await postResponse.json();
+        setUser(createdUser);
+        return { success: true };
+      } else {
+        return { success: false, message: 'Помилка сервера при реєстрації.' };
+      }
+    } catch (error) {
+      console.error('Register error:', error);
+      alert("Помилка з'єднання. Перевірте, чи запущено json-server.");
+      return { success: false, message: "Помилка з'єднання." };
     }
-
-    const newUser = {
-      id: Date.now(),
-      email,
-      password,
-      name,
-      favorites: [],
-    };
-
-    const newUsersList = [...currentUsers, newUser];
-    localStorage.setItem(
-      AuthUtils.USERS_STORAGE_KEY,
-      JSON.stringify(newUsersList)
-    );
-
-    setUser(newUser);
-    return { success: true };
   };
 
   const logout = () => {
@@ -67,45 +84,36 @@ export function AuthProvider({ children }) {
   const toggleFavorite = async (productId) => {
     if (!user) return;
 
-    await AuthUtils.simulateFetchPost(100);
-
     const isFavorite = user.favorites.includes(productId);
-    let newFavorites;
-
-    if (isFavorite) {
-      newFavorites = user.favorites.filter((id) => id !== productId);
-    } else {
-      newFavorites = [...user.favorites, productId];
-    }
+    const newFavorites = isFavorite
+      ? user.favorites.filter((id) => id !== productId)
+      : [...user.favorites, productId];
 
     const updatedUser = { ...user, favorites: newFavorites };
-    setUser(updatedUser);
 
-    const users = AuthUtils.getUsersFromStorage();
-    const userIndex = users.findIndex((u) => u.id === user.id);
-    if (userIndex !== -1) {
-      users[userIndex] = updatedUser;
-      localStorage.setItem(AuthUtils.USERS_STORAGE_KEY, JSON.stringify(users));
+    try {
+      const patchResponse = await fetch(`${USERS_API_URL}/${user.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ favorites: newFavorites }),
+      });
+
+      if (patchResponse.ok) {
+        setUser(updatedUser);
+      } else {
+        alert('Помилка оновлення улюблених на сервері.');
+      }
+    } catch (error) {
+      console.error('Favorite update error:', error);
+      alert("Помилка з'єднання. Зміни не збережено.");
     }
   };
 
-  const value = {
-    user,
-    isLoggedIn,
-    login,
-    register,
-    logout,
-    toggleFavorite,
-  };
+  const value = { user, login, register, logout, toggleFavorite };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
+  return useContext(AuthContext);
 }
