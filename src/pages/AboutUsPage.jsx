@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styles from './AboutUsPage.module.css';
 import Button from '../components/common/Button/Button.jsx';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.jsx';
 import imgColor1 from '../assets/about-color-1.png';
 import imgColor2 from '../assets/about-color-2.png';
 import imgColor3 from '../assets/about-color-3.png';
@@ -46,6 +47,8 @@ export default function AboutUsPage() {
   const [typeIndex, setTypeIndex] = useState(0);
   const [problemIndex, setProblemIndex] = useState(0);
 
+  const { user } = useAuth();
+
   const handleNextColor = () => {
     setColorIndex((prevIndex) => (prevIndex + 1) % colorImages.length);
   };
@@ -71,7 +74,6 @@ export default function AboutUsPage() {
         </div>
 
         <div className={styles.cardGrid}>
-          {}
           <div className={styles.card}>
             <img src={colorImages[colorIndex]} alt="Кольори волосся" />
             <div className={styles.cardOverlay}>
@@ -82,7 +84,6 @@ export default function AboutUsPage() {
             </div>
           </div>
 
-          {}
           <div className={styles.card}>
             <img src={typeImages[typeIndex]} alt="Типи волосся" />
             <div className={styles.cardOverlay}>
@@ -93,7 +94,6 @@ export default function AboutUsPage() {
             </div>
           </div>
 
-          {}
           <div className={styles.card}>
             <img src={problemImages[problemIndex]} alt="Проблеми волосся" />
             <div className={styles.cardOverlay}>
@@ -105,7 +105,6 @@ export default function AboutUsPage() {
           </div>
         </div>
       </section>
-      {}
       <section className={styles.featuresSection}>
         <h2 className={styles.featuresTitle}>В ЧОМУ НАША ОСОБЛИВІСТЬ?</h2>
         <div className={styles.featuresGrid}>
@@ -124,10 +123,11 @@ export default function AboutUsPage() {
             <h3>Зручність інтерфейсу</h3>
           </div>
         </div>{' '}
-        {}
-        <Link to="/register">
-          <Button variant="dark">Зареєструватися</Button>
-        </Link>
+        {!user && (
+          <Link to="/register">
+            <Button variant="dark">Зареєструватися</Button>
+          </Link>
+        )}
       </section>{' '}
       {}
     </div>

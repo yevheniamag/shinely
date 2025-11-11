@@ -5,6 +5,7 @@ import Button from '../components/common/Button/Button.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useFetchData } from '../hooks/useFetchData.js';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 export default function ProductInfoPage() {
   const { productId } = useParams();
   const { user, toggleFavorite } = useAuth();
@@ -14,7 +15,7 @@ export default function ProductInfoPage() {
     data: allProducts,
     isLoading,
     error,
-  } = useFetchData('http://localhost:3004/products');
+  } = useFetchData(`${API_BASE_URL}/products`);
 
   const product = useMemo(() => {
     if (!allProducts) {

@@ -1,7 +1,10 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext(null);
-const USERS_API_URL = 'http://localhost:3004/users';
+
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+const USERS_API_URL = `${API_BASE_URL}/users`;
+
 const CURRENT_USER_KEY = 'shinely-current-user';
 
 const getInitialUser = () => {
@@ -22,7 +25,9 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch(`${USERS_API_URL}?email=${email}`);
+      const response = await fetch(
+        `${USERS_API_URL}?email=${email}&password=${password}`
+      );
 
       if (!response.ok) {
         return { success: false, message: 'Помилка сервера при вході.' };
@@ -31,7 +36,7 @@ export function AuthProvider({ children }) {
       const users = await response.json();
       const foundUser = users[0];
 
-      if (foundUser && foundUser.password === password) {
+      if (foundUser) {
         setUser(foundUser);
         return { success: true };
       } else {
@@ -39,15 +44,14 @@ export function AuthProvider({ children }) {
       }
     } catch (error) {
       console.error('Login error:', error);
-      alert(
-        "Помилка з'єднання. Перевірте, чи запущено json-server (npm run server)."
-      );
-      return { success: false, message: "Помилка з'єднання." };
+      return {
+        success: false,
+        message: "Помилка з'єднання. Перевірте, чи запущено json-server.",
+      };
     }
   };
-
   /* eslint-disable react-refresh/only-export-components */
-  const register = async (email, password, name) => {
+  const register = async (email, password, firstName, lastName) => {
     try {
       const checkResponse = await fetch(`${USERS_API_URL}?email=${email}`);
       const existingUsers = await checkResponse.json();
@@ -55,7 +59,7 @@ export function AuthProvider({ children }) {
         return { success: false, message: 'Цей email вже зареєстрований!' };
       }
 
-      const newUser = { email, password, name, favorites: [] };
+      const newUser = { email, password, firstName, lastName, favorites: [] };
 
       const postResponse = await fetch(USERS_API_URL, {
         method: 'POST',
@@ -72,8 +76,10 @@ export function AuthProvider({ children }) {
       }
     } catch (error) {
       console.error('Register error:', error);
-      alert("Помилка з'єднання. Перевірте, чи запущено json-server.");
-      return { success: false, message: "Помилка з'єднання." };
+      return {
+        success: false,
+        message: "Помилка з'єднання. Перевірте, чи запущено json-server.",
+      };
     }
   };
 
@@ -83,11 +89,11 @@ export function AuthProvider({ children }) {
 
   const toggleFavorite = async (productId) => {
     if (!user) return;
-
-    const isFavorite = user.favorites.includes(productId);
+    const productIdStr = String(productId);
+    const isFavorite = user.favorites.includes(productIdStr);
     const newFavorites = isFavorite
-      ? user.favorites.filter((id) => id !== productId)
-      : [...user.favorites, productId];
+      ? user.favorites.filter((id) => id !== productIdStr)
+      : [...user.favorites, productIdStr];
 
     const updatedUser = { ...user, favorites: newFavorites };
 

@@ -4,6 +4,8 @@ import ProductCarousel from '../components/common/ProductCarousel/ProductCarouse
 import Button from '../components/common/Button/Button.jsx';
 import { useFetchData } from '../hooks/useFetchData.js';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 const getCategoryTitle = (category) => {
   const titles = {
     shampoos: 'Шампунь',
@@ -59,7 +61,7 @@ export default function ProductSelectorPage() {
     data: allProducts,
     isLoading,
     error,
-  } = useFetchData('http://localhost:3004/products');
+  } = useFetchData(`${API_BASE_URL}/products`);
 
   const handleSelectFilter = (filterName, value) => {
     setSelectedFilters((prev) => ({
