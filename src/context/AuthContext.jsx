@@ -1,116 +1,136 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext(null);
-
 const API_BASE_URL = import.meta.env.VITE_API_URL;
-const USERS_API_URL = `${API_BASE_URL}/users`;
-
-const CURRENT_USER_KEY = 'shinely-current-user';
+const TOKEN_KEY = 'shinely-auth-token';
+const USER_KEY = 'shinely-current-user';
 
 const getInitialUser = () => {
-  const user = localStorage.getItem(CURRENT_USER_KEY);
+  const user = localStorage.getItem(USER_KEY);
   return user ? JSON.parse(user) : null;
+};
+const getInitialToken = () => {
+  return localStorage.getItem(TOKEN_KEY) || null;
 };
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(getInitialUser);
+  const [token, setToken] = useState(getInitialToken);
 
   useEffect(() => {
-    if (user) {
-      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+    if (user && token) {
+      localStorage.setItem(USER_KEY, JSON.stringify(user));
+      localStorage.setItem(TOKEN_KEY, token);
     } else {
-      localStorage.removeItem(CURRENT_USER_KEY);
+      localStorage.removeItem(USER_KEY);
+      localStorage.removeItem(TOKEN_KEY);
     }
-  }, [user]);
+  }, [user, token]);
+
+  const fetchWithAuth = async (url, options = {}) => {
+    const headers = {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    };
+
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    return fetch(url, { ...options, headers });
+  };
 
   const login = async (email, password) => {
     try {
-      const response = await fetch(
-        `${USERS_API_URL}?email=${email}&password=${password}`
-      );
+      const response = await fetch(`${API_BASE_URL}/users/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
       if (!response.ok) {
-        return { success: false, message: 'Помилка сервера при вході.' };
+        const errorData = await response.json();
+        return {
+          success: false,
+          message: errorData.message || 'Помилка сервера',
+        };
       }
 
-      const users = await response.json();
-      const foundUser = users[0];
+      const { token: newToken, user: userData } = await response.json();
 
-      if (foundUser) {
-        setUser(foundUser);
-        return { success: true };
-      } else {
-        return { success: false, message: 'Неправильний email або пароль' };
-      }
+      setUser(userData);
+      setToken(newToken);
+
+      return { success: true };
     } catch (error) {
       console.error('Login error:', error);
-      return {
-        success: false,
-        message: "Помилка з'єднання. Перевірте, чи запущено json-server.",
-      };
+      return { success: false, message: "Помилка з'єднання." };
     }
   };
+
   /* eslint-disable react-refresh/only-export-components */
   const register = async (email, password, firstName, lastName) => {
     try {
-      const checkResponse = await fetch(`${USERS_API_URL}?email=${email}`);
-      const existingUsers = await checkResponse.json();
-      if (existingUsers.length > 0) {
-        return { success: false, message: 'Цей email вже зареєстрований!' };
-      }
-
-      const newUser = { email, password, firstName, lastName, favorites: [] };
-
-      const postResponse = await fetch(USERS_API_URL, {
+      const response = await fetch(`${API_BASE_URL}/users/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newUser),
+        body: JSON.stringify({ email, password, firstName, lastName }),
       });
 
-      if (postResponse.ok) {
-        const createdUser = await postResponse.json();
-        setUser(createdUser);
-        return { success: true };
-      } else {
-        return { success: false, message: 'Помилка сервера при реєстрації.' };
+      if (!response.ok) {
+        const errorData = await response.json();
+        return {
+          success: false,
+          message: errorData.message || 'Помилка сервера',
+        };
       }
+
+      const { token: newToken, user: userData } = await response.json();
+
+      setUser(userData);
+      setToken(newToken);
+
+      return { success: true };
     } catch (error) {
       console.error('Register error:', error);
-      return {
-        success: false,
-        message: "Помилка з'єднання. Перевірте, чи запущено json-server.",
-      };
+      return { success: false, message: "Помилка з'єднання." };
     }
   };
 
   const logout = () => {
     setUser(null);
+    setToken(null);
   };
 
   const toggleFavorite = async (productId) => {
     if (!user) return;
+
     const productIdStr = String(productId);
     const isFavorite = user.favorites.includes(productIdStr);
     const newFavorites = isFavorite
       ? user.favorites.filter((id) => id !== productIdStr)
       : [...user.favorites, productIdStr];
 
+    const oldUser = user;
     const updatedUser = { ...user, favorites: newFavorites };
+    setUser(updatedUser);
 
     try {
-      const patchResponse = await fetch(`${USERS_API_URL}/${user.id}`, {
+      const response = await fetchWithAuth(`${API_BASE_URL}/users/favorites`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ favorites: newFavorites }),
       });
 
-      if (patchResponse.ok) {
-        setUser(updatedUser);
-      } else {
+      if (!response.ok) {
+        setUser(oldUser);
         alert('Помилка оновлення улюблених на сервері.');
+      } else {
+        const actualUser = await response.json();
+        setUser(actualUser);
       }
     } catch (error) {
       console.error('Favorite update error:', error);
+      setUser(oldUser);
       alert("Помилка з'єднання. Зміни не збережено.");
     }
   };

@@ -389,8 +389,8 @@
       "firstName": "Yevhenia",
       "lastName": "Magula",
       "favorites": [
-        3,
-        2,
+        "3",
+        "2",
         "1"
       ]
     },
@@ -406,20 +406,41 @@
       "id": "3173",
       "email": "milaremeta@gmail.com",
       "password": "12345",
-      "name": "Міла",
-      "favorites": []
+      "firstName": "Міла",
+      "lastName": "",
+      "favorites": [
+        "2",
+        "8",
+        "6"
+      ]
     },
     {
       "id": "1920",
       "email": "evgeniamagula6@gmail.com",
       "password": "12345",
-      "name": "Євгенія",
+      "firstName": "Євгенія",
+      "lastName": "",
       "favorites": [
         "17",
         "16",
-        "18",
         "2"
       ]
+    },
+    {
+      "id": "2e87",
+      "email": "efwgguhg3uh@g",
+      "password": "123",
+      "firstName": "h",
+      "lastName": "h",
+      "favorites": []
+    },
+    {
+      "id": "2e+87",
+      "email": "evgenimagula6@gmail.com",
+      "password": "12345",
+      "firstName": "фацп",
+      "lastName": "вкратр",
+      "favorites": []
     }
   ]
 }
