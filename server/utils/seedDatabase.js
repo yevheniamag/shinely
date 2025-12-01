@@ -1,50 +1,29 @@
 import fs from 'fs';
 import path from 'path';
-import bcrypt from 'bcryptjs';
 import Product from '../models/Product.js';
 import User from '../models/User.js';
+
+const __dirname = path.resolve();
 
 export const seedDatabase = async () => {
   try {
     const productCount = await Product.countDocuments();
     if (productCount > 0) {
-      console.log('База продуктів вже заповнена. Синхронізацію пропущено.');
+      console.log('ℹ База продуктів вже заповнена.');
     } else {
-      const dbPath = path.join(process.cwd(), '..', 'db.json');
-
+      const dbPath = path.join(__dirname, '..', 'db.json');
       if (fs.existsSync(dbPath)) {
         const rawData = fs.readFileSync(dbPath);
         const data = JSON.parse(rawData);
 
         if (data.products) {
-          await Product.insertMany(data.products);
-          console.log('Продукти успішно завантажено в MongoDB.');
-        }
-      } else {
-        console.log('db.json не знайдено, пропускаємо seed.');
-      }
-    }
+          const productsToSave = data.products.map((product) => {
+            const { id: _ID, ...rest } = product;
+            return rest;
+          });
 
-    const userCount = await User.countDocuments();
-    if (userCount > 0) {
-      console.log('База користувачів вже заповнена. Синхронізацію пропущено.');
-    } else {
-      const dbPath = path.join(process.cwd(), '..', 'db.json');
-      if (fs.existsSync(dbPath)) {
-        const rawData = fs.readFileSync(dbPath);
-        const data = JSON.parse(rawData);
-
-        if (data.users) {
-          for (const user of data.users) {
-            const hashedPassword = await bcrypt.hash(user.password, 10);
-            const newUser = new User({
-              ...user,
-              password: hashedPassword,
-              favorites: user.favorites.map((f) => String(f)),
-            });
-            await newUser.save();
-          }
-          console.log('Користувачі успішно завантажені (з хешуванням).');
+          await Product.insertMany(productsToSave);
+          console.log('Продукти успішно завантажено (з новими _id).');
         }
       }
     }

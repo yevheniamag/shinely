@@ -29,7 +29,7 @@ export default function ProductCarousel({ productList }) {
       {}
       <div className={styles.productListContainer} ref={scrollRef}>
         {productList.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
 

@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import styles from './ProductInfoPage.module.css';
 import Button from '../components/common/Button/Button.jsx';
@@ -6,26 +5,19 @@ import { useAuth } from '../context/AuthContext.jsx';
 import { useFetchData } from '../hooks/useFetchData.js';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 export default function ProductInfoPage() {
   const { productId } = useParams();
   const { user, toggleFavorite } = useAuth();
   const navigate = useNavigate();
 
   const {
-    data: allProducts,
+    data: product,
     isLoading,
     error,
-  } = useFetchData(`${API_BASE_URL}/products`);
+  } = useFetchData(`${API_BASE_URL}/products/${productId}`);
 
-  const product = useMemo(() => {
-    if (!allProducts) {
-      return null;
-    }
-
-    return allProducts.find((p) => p.id === productId);
-  }, [allProducts, productId]);
-
-  const isFavorite = user?.favorites.includes(product?.id);
+  const isFavorite = user?.favorites.includes(product?._id);
 
   const handleAddToFavorites = () => {
     if (!user) {
@@ -34,7 +26,7 @@ export default function ProductInfoPage() {
       return;
     }
     if (product) {
-      toggleFavorite(product.id);
+      toggleFavorite(product._id);
     }
   };
 
@@ -107,7 +99,7 @@ export default function ProductInfoPage() {
 
           {product.hairType && (
             <div className={styles.infoBlock}>
-              <h3 classNameMame={styles.sectionTitle}>Тип волосся</h3>
+              <h3 className={styles.sectionTitle}>Тип волосся</h3>
               <p className={styles.hairType}>{product.hairType}</p>
             </div>
           )}

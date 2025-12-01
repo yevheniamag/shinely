@@ -3,7 +3,9 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import { authenticateToken } from '../middleware/authMiddleware.js';
+import dotenv from 'dotenv';
 
+dotenv.config();
 const router = express.Router();
 
 router.post('/register', async (req, res) => {
@@ -22,10 +24,8 @@ router.post('/register', async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUserId = String(Date.now());
 
     const user = new User({
-      id: newUserId,
       email,
       password: hashedPassword,
       firstName,
@@ -35,7 +35,7 @@ router.post('/register', async (req, res) => {
     await user.save();
 
     const token = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user._id, email: user.email },
       process.env.JWT_SECRET,
       {
         expiresIn: '1h',
@@ -44,7 +44,13 @@ router.post('/register', async (req, res) => {
 
     res.status(201).json({
       token,
-      user: { id: user.id, email, firstName, lastName, favorites: [] },
+      user: {
+        _id: user._id,
+        email,
+        firstName,
+        lastName,
+        favorites: [],
+      },
     });
   } catch (error) {
     res.status(500).json({ message: 'Помилка сервера', error: error.message });
@@ -55,17 +61,15 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email: email });
-    if (!user) {
+    if (!user)
       return res.status(400).json({ message: 'Неправильний email або пароль' });
-    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
+    if (!isMatch)
       return res.status(400).json({ message: 'Неправильний email або пароль' });
-    }
 
     const token = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user._id, email: user.email },
       process.env.JWT_SECRET,
       {
         expiresIn: '1h',
@@ -75,7 +79,7 @@ router.post('/login', async (req, res) => {
     res.json({
       token,
       user: {
-        id: user.id,
+        _id: user._id,
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
@@ -98,14 +102,14 @@ router.patch('/favorites', authenticateToken, async (req, res) => {
   }
 
   try {
-    const updatedUser = await User.findOneAndUpdate(
-      { id: userId },
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
       { favorites: favorites },
       { new: true }
     );
 
     res.json({
-      id: updatedUser.id,
+      _id: updatedUser._id,
       email: updatedUser.email,
       firstName: updatedUser.firstName,
       lastName: updatedUser.lastName,
