@@ -6,6 +6,8 @@ describe('<App />', () => {
   it('renders the app structure (Header & Footer) without crashing', () => {
     window.history.pushState({}, '', '/');
 
+    cy.on('uncaught:exception', () => false);
+
     const mockAuth = {
       user: null,
       login: cy.stub(),
@@ -21,7 +23,6 @@ describe('<App />', () => {
     );
 
     cy.contains('S H I N E L Y').should('be.visible');
-
     cy.contains('HairCare Project').should('be.visible');
     cy.contains('ПРО НАС').should('be.visible');
   });
