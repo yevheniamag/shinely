@@ -6,7 +6,7 @@ export default function ProductCard({ product }) {
   const { user, toggleFavorite } = useAuth();
   const navigate = useNavigate();
 
-  const isFavorite = user?.favorites.includes(product.id);
+  const isFavorite = user?.favorites.includes(product._id);
 
   const handleFavoriteClick = (e) => {
     e.preventDefault();
@@ -17,12 +17,12 @@ export default function ProductCard({ product }) {
       navigate('/login');
       return;
     }
-    toggleFavorite(product.id);
+    toggleFavorite(product._id);
   };
 
   return (
     <div className={styles.card}>
-      <Link to={`/product/${product.id}`} className={styles.cardLink}>
+      <Link to={`/product/${product._id}`} className={styles.cardLink}>
         <div className={styles.imageWrapper}>
           <img
             src={product.image}

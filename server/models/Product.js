@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema({
-  id: { type: String, unique: true },
   image: String,
   name: String,
   type: String,

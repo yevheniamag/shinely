@@ -21,7 +21,9 @@ export default function FavoritesPage() {
     if (!user || !allProducts) {
       return [];
     }
-    return allProducts.filter((product) => user.favorites.includes(product.id));
+    return allProducts.filter((product) =>
+      user.favorites.includes(product._id)
+    );
   }, [user, allProducts]);
 
   if (isLoading) {
@@ -58,7 +60,7 @@ export default function FavoritesPage() {
         {favoriteProducts.length > 0 ? (
           <div className={styles.productsGrid}>
             {favoriteProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product._id} product={product} />
             ))}
           </div>
         ) : (
