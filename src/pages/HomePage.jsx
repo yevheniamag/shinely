@@ -54,15 +54,15 @@ function HomePage() {
               <div className={styles.featureCard}>
                 <p className={styles.featureNumber}>2.</p>
                 <div className={styles.featureImageContainer}>
-                  <img src={feature2} alt="Календар догляду" />
-                  <h3>Календар догляду</h3>
+                  <img src={feature2} alt="Зручний підбір" />
+                  <h3>Зручний підбір</h3>
                 </div>
               </div>
               <div className={styles.featureCard}>
                 <p className={styles.featureNumber}>3.</p>
                 <div className={styles.featureImageContainer}>
-                  <img src={feature3} alt="Персональні рекомендації" />
-                  <h3>Персональні рекомендації</h3>
+                  <img src={feature3} alt="Список вподобаних" />
+                  <h3>Список вподобаних</h3>
                 </div>
               </div>
             </div>

@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-
+import { AuthProvider } from './context/AuthContext.jsx';
 import './index.css';
 
 import Layout from './components/layout/Layout.jsx';
@@ -21,12 +21,17 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: 'select', element: <ProductSelectorPage /> },
+      {
+        path: 'select',
+        element: (
+          <ProtectedRoute>
+            <ProductSelectorPage />
+          </ProtectedRoute>
+        ),
+      },
       { path: 'login', element: <LoginPage /> },
       { path: 'register', element: <RegistrationPage /> },
       { path: 'about', element: <AboutUsPage /> },
-      { path: 'product-info', element: <ProductInfoPage /> },
-
       {
         path: 'favorites',
         element: (
@@ -34,6 +39,10 @@ const router = createBrowserRouter([
             <FavoritesPage />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: 'product/:productId',
+        element: <ProductInfoPage />,
       },
     ],
   },
@@ -45,6 +54,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>
 );

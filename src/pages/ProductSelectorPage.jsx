@@ -1,86 +1,10 @@
+import { useState, useMemo } from 'react';
 import styles from './ProductSelectorPage.module.css';
-import ProductCard from '../components/common/ProductCard/ProductCard.jsx';
+import ProductCarousel from '../components/common/ProductCarousel/ProductCarousel.jsx';
 import Button from '../components/common/Button/Button.jsx';
+import { useFetchData } from '../hooks/useFetchData.js';
 
-import shampoo1 from '../assets/shampoo-1.png';
-import shampoo2 from '../assets/shampoo-2.png';
-import shampoo3 from '../assets/shampoo-3.png';
-import shampoo4 from '../assets/shampoo-4.png';
-import shampoo5 from '../assets/shampoo-5.png';
-import conditioner1 from '../assets/conditioner-1.png';
-import conditioner2 from '../assets/conditioner-2.png';
-import conditioner3 from '../assets/conditioner-3.png';
-import conditioner4 from '../assets/conditioner-4.png';
-import conditioner5 from '../assets/conditioner-5.png';
-import mask1 from '../assets/mask-1.png';
-import mask2 from '../assets/mask-2.png';
-import mask3 from '../assets/mask-3.png';
-import mask4 from '../assets/mask-4.png';
-import mask5 from '../assets/mask-5.png';
-import oil1 from '../assets/oil-1.png';
-import oil2 from '../assets/oil-2.png';
-import oil3 from '../assets/oil-3.png';
-import oil4 from '../assets/oil-4.png';
-import oil5 from '../assets/oil-5.png';
-import spray1 from '../assets/spray-1.png';
-import spray2 from '../assets/spray-2.png';
-import spray3 from '../assets/spray-3.png';
-import spray4 from '../assets/spray-4.png';
-import spray5 from '../assets/spray-5.png';
-
-const products = {
-  shampoos: [
-    { id: 1, image: shampoo2, name: 'Redken Volume Injection Shampoo' },
-    { id: 2, image: shampoo1, name: 'Herbal Essences Petal Soft' },
-    { id: 3, image: shampoo3, name: 'Matrix Food For Soft Hydrating' },
-    { id: 4, image: shampoo4, name: 'Davines Minu Shampoo' },
-    { id: 5, image: shampoo5, name: 'Vichy Dercos Anti-Dandruff' },
-  ],
-  conditioners: [
-    { id: 6, image: conditioner1, name: 'Moisture & More Conditioner' },
-    { id: 7, image: conditioner2, name: 'Tresemme Flawless Waves' },
-    { id: 8, image: conditioner3, name: 'Kerastase Premiere Fondant' },
-    {
-      id: 9,
-      image: conditioner4,
-      name: 'Clever Hair Cosmetics 3D Line Extra Treatment In One Minute',
-    },
-    {
-      id: 10,
-      image: conditioner5,
-      name: 'Kerastase Chroma Absolu Fondant Cica Chroma',
-    },
-  ],
-  masks: [
-    { id: 11, image: mask1, name: "La'dor Eco Hydro LPP Treatment" },
-    { id: 12, image: mask2, name: 'Brelil Numero Total Repair Mask' },
-    {
-      id: 13,
-      image: mask3,
-      name: 'Alfaparf Milano Semi Di Lino Moisture Nutritive Mask',
-    },
-    { id: 14, image: mask4, name: 'Inebrya She Care Repair Mask' },
-    { id: 15, image: mask5, name: 'Anagana Professional Lipid Mask' },
-  ],
-  oils: [
-    { id: 16, image: oil1, name: "La'dor Wonder Hair Oil" },
-    { id: 17, image: oil2, name: 'CHI Argan Oil Plus Moringa Oil' },
-    { id: 18, image: oil3, name: 'Comex Ayurvedic Natural Oil' },
-    { id: 19, image: oil4, name: 'Hair Trend Total Oil Repair' },
-    { id: 20, image: oil5, name: 'Bogenia Professional Hair Oil Marula Oil' },
-  ],
-  sprays: [
-    { id: 21, image: spray1, name: 'CHI Volume Booster' },
-    { id: 22, image: spray2, name: 'Leia Magnetisme Spray' },
-    {
-      id: 23,
-      image: spray3,
-      name: 'You look Professional Multiaction Spray 10 in 1',
-    },
-    { id: 24, image: spray4, name: 'Comex Ayurvedic Natural' },
-    { id: 25, image: spray5, name: 'Alter Ego Italy Hasty Too Hi T Security' },
-  ],
-};
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 const getCategoryTitle = (category) => {
   const titles = {
@@ -93,51 +17,249 @@ const getCategoryTitle = (category) => {
   return titles[category] || category;
 };
 
+const typeToCategoryKey = {
+  Шампунь: 'shampoos',
+  Кондиціонер: 'conditioners',
+  Маска: 'masks',
+  Олія: 'oils',
+  Спрей: 'sprays',
+};
+
+const filterOptions = {
+  hairType: [
+    'Сухе',
+    'Тонке',
+    'Фарбоване',
+    'Пошкоджене',
+    'Кучеряве',
+    'Будь-який',
+  ],
+  problem: [
+    'Ламкість',
+    'Сухість',
+    'Лупа',
+    'Випадіння',
+    'Пухнастість',
+    "Відсутність об'єму",
+    'Посічені кінчики',
+    'Термозахист',
+    'Тьмяність',
+    'Пошкодження',
+  ],
+  type: ['Шампунь', 'Кондиціонер', 'Маска', 'Олія', 'Спрей'],
+};
+
 export default function ProductSelectorPage() {
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const [selectedFilters, setSelectedFilters] = useState({
+    hairType: null,
+    problem: null,
+    type: null,
+  });
+  const [filteredProducts, setFilteredProducts] = useState(null);
+  const {
+    data: allProducts,
+    isLoading,
+    error,
+  } = useFetchData(`${API_BASE_URL}/products`);
+
+  const handleSelectFilter = (filterName, value) => {
+    setSelectedFilters((prev) => ({
+      ...prev,
+      [filterName]: value,
+    }));
+    setOpenDropdown(null);
+  };
+
+  const handleFilterSubmit = () => {
+    if (!allProducts) return;
+
+    let results = allProducts;
+    const activeFilters = Object.entries(selectedFilters).filter(
+      ([, value]) => value !== null
+    );
+    if (activeFilters.length === 0) {
+      setFilteredProducts(null);
+      return;
+    }
+    results = results.filter((product) => {
+      return activeFilters.every(([key, value]) => {
+        if (key === 'type') {
+          return product.type === value;
+        }
+        const productFilterValue = product[`filter_${key}`];
+        if (value === 'Будь-який') {
+          return true;
+        }
+        if (productFilterValue === 'Будь-який') {
+          return true;
+        }
+        return productFilterValue === value;
+      });
+    });
+    setFilteredProducts(results);
+  };
+
+  const handleResetFilters = () => {
+    setSelectedFilters({ hairType: null, problem: null, type: null });
+    setFilteredProducts(null);
+    setOpenDropdown(null);
+  };
+
+  const productsToShow = useMemo(() => {
+    if (!allProducts) return {};
+
+    const sourceData = filteredProducts || allProducts;
+
+    return sourceData.reduce((acc, product) => {
+      const category = typeToCategoryKey[product.type];
+      if (!category) return acc;
+      if (!acc[category]) {
+        acc[category] = [];
+      }
+      acc[category].push(product);
+      return acc;
+    }, {});
+  }, [filteredProducts, allProducts]);
+
+  if (isLoading) {
+    return (
+      <div className={styles.pageContainer}>
+        <h2 style={{ textAlign: 'center', marginTop: '50px' }}>
+          Завантаження продуктів...
+        </h2>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={styles.pageContainer}>
+        <h2 style={{ textAlign: 'center', marginTop: '50px' }}>
+          Помилка завантаження: {error}
+        </h2>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageContainer}>
       <section className={styles.filterSection}>
         <h1 className={styles.title}>ПІДБІР ЗАСОБІВ</h1>
         <div className={styles.descriptionContainer}>
           <p className={styles.description}>
-            Тут ти можеш підібрати ідеальні засоби догляду за своїм волоссям,
-            обери свій тип волосся та проблему — і отримай персональні
-            рекомендації масок, олій та інших засобів.
+            Тут ти можеш підібрати ідеальні засоби догляду, що відповідатимуть
+            саме твоїм потребам.
           </p>
         </div>
         <div className={styles.filters}>
-          <button className={styles.filterButton}>
-            <span>Тип волосся</span>
-            <span>&gt;</span>
-          </button>
-          <button className={styles.filterButton}>
-            <span>Проблема</span>
-            <span>&gt;</span>
-          </button>
-          <button className={styles.filterButton}>
-            <span>Тип засобу</span>
-            <span>&gt;</span>
-          </button>
+          <div className={styles.filterWrapper}>
+            <button
+              className={styles.filterButton}
+              onClick={() =>
+                setOpenDropdown(openDropdown === 'hairType' ? null : 'hairType')
+              }
+            >
+              <span>{selectedFilters.hairType || 'Тип волосся'}</span>
+              <span>&gt;</span>
+            </button>
+            {openDropdown === 'hairType' && (
+              <div className={styles.dropdown}>
+                {filterOptions.hairType.map((option) => (
+                  <div
+                    key={option}
+                    className={styles.dropdownItem}
+                    onClick={() => handleSelectFilter('hairType', option)}
+                  >
+                    {option}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className={styles.filterWrapper}>
+            <button
+              className={styles.filterButton}
+              onClick={() =>
+                setOpenDropdown(openDropdown === 'problem' ? null : 'problem')
+              }
+            >
+              <span>{selectedFilters.problem || 'Проблема'}</span>
+              <span>&gt;</span>
+            </button>
+            {openDropdown === 'problem' && (
+              <div className={styles.dropdown}>
+                {filterOptions.problem.map((option) => (
+                  <div
+                    key={option}
+                    className={styles.dropdownItem}
+                    onClick={() => handleSelectFilter('problem', option)}
+                  >
+                    {option}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className={styles.filterWrapper}>
+            <button
+              className={styles.filterButton}
+              onClick={() =>
+                setOpenDropdown(openDropdown === 'type' ? null : 'type')
+              }
+            >
+              <span>{selectedFilters.type || 'Тип засобу'}</span>
+              <span>&gt;</span>
+            </button>
+            {openDropdown === 'type' && (
+              <div className={styles.dropdown}>
+                {filterOptions.type.map((option) => (
+                  <div
+                    key={option}
+                    className={styles.dropdownItem}
+                    onClick={() => handleSelectFilter('type', option)}
+                  >
+                    {option}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-        <Button variant="primary" className={styles.submitButton}>
-          Підібрати
-        </Button>
+        <div className={styles.actionButtons}>
+          <Button
+            variant="primary"
+            className={styles.submitButton}
+            onClick={handleFilterSubmit}
+          >
+            Підібрати
+          </Button>
+          <Button
+            variant="light"
+            className={styles.resetButton}
+            onClick={handleResetFilters}
+          >
+            Скинути
+          </Button>
+        </div>
       </section>
 
       <div className={styles.resultsContainer}>
-        {Object.entries(products).map(([category, productList]) =>
-          productList.length > 0 ? (
+        {Object.keys(productsToShow).length > 0 ? (
+          Object.entries(productsToShow).map(([category, productList]) => (
             <section key={category} className={styles.categorySection}>
               <h2 className={styles.categoryTitle}>
                 {getCategoryTitle(category)}
               </h2>
-              <div className={styles.productList}>
-                {productList.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
+
+              <ProductCarousel productList={productList} />
             </section>
-          ) : null
+          ))
+        ) : (
+          <div className={styles.noResultsContainer}>
+            <h3>На жаль, за вашими фільтрами нічого не знайдено.</h3>
+            <p>Спробуйте скинути фільтри або обрати інші параметри.</p>
+          </div>
         )}
       </div>
     </div>
