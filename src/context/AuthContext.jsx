@@ -1,7 +1,9 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
 export const AuthContext = createContext(null);
-const API_BASE_URL = import.meta.env.VITE_API_URL;
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3004';
+
 const TOKEN_KEY = 'shinely-auth-token';
 const USER_KEY = 'shinely-current-user';
 
@@ -9,6 +11,7 @@ const getInitialUser = () => {
   const user = localStorage.getItem(USER_KEY);
   return user ? JSON.parse(user) : null;
 };
+
 const getInitialToken = () => {
   return localStorage.getItem(TOKEN_KEY) || null;
 };
@@ -100,6 +103,8 @@ export function AuthProvider({ children }) {
   const logout = () => {
     setUser(null);
     setToken(null);
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(USER_KEY);
   };
 
   const toggleFavorite = async (productId) => {
