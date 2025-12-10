@@ -121,3 +121,53 @@
   height: 24px;
   object-fit: contain;
 }
+@media (max-width: 768px) {
+  .footer {
+    padding: 30px 20px; 
+    text-align: center; 
+    height: auto; 
+  }
+
+  .container {
+    flex-direction: column; 
+    align-items: center; 
+    gap: 30px;
+  }
+
+  .column {
+    padding-right: 0;
+    width: 100%;
+    max-width: 320px; 
+  }
+
+  .subscribeForm {
+    flex-direction: column; 
+    gap: 10px;
+  }
+
+  .emailInput {
+    border-radius: 5px; 
+    text-align: center;
+  }
+
+  .emailButton {
+    border-radius: 5px;
+    width: 100%; 
+    padding: 12px;
+  }
+
+  .socialIcons {
+    position: static; 
+    margin-top: 20px; 
+    justify-content: center; 
+    width: 100%;
+  }
+
+  .logo {
+    margin-bottom: 10px;
+  }
+
+  .copyright {
+    margin-top: 30px;
+  }
+}

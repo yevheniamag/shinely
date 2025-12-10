@@ -21,3 +21,73 @@ a {
   color: inherit;
   text-decoration: none;
 }
+@media (max-width: 768px) {
+  .container,
+  .wrapper,
+  .app {
+    width: 100% !important;
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  header,
+  .header,
+  nav {
+    flex-direction: column;
+    height: auto;
+    padding: 15px 0;
+    gap: 15px;
+  }
+
+  header nav,
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .products-grid,
+  .products-list,
+  .catalog {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+    padding: 10px;
+  }
+
+  .flex-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .product-card,
+  .card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto 20px auto; 
+  }
+
+  .product-card img,
+  .card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  input,
+  button,
+  select {
+    width: 100% !important; 
+    max-width: 100%;
+    font-size: 16px; 
+  }
+
+  form {
+    width: 90% !important;
+    margin: 0 auto;
+  }
+}

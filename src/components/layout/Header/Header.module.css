@@ -60,3 +60,53 @@
   padding: 10px 24px !important;
   font-weight: 600 !important;
 }
+@media (max-width: 768px) {
+  .headerWrapper {
+    padding: 10px; 
+  }
+
+  .header {
+    flex-direction: column; 
+    height: auto;
+    padding: 20px;
+    border-radius: 25px; 
+    gap: 20px; 
+  }
+
+  .logo {
+    letter-spacing: 0.2em; 
+    text-align: center;
+    font-size: 22px;
+  }
+
+  .navigation {
+    flex-direction: column; 
+    gap: 15px;
+    width: 100%;
+    align-items: center; 
+  }
+
+  .navigation a {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 10px; 
+  }
+
+  .authButtons {
+    flex-direction: column; 
+    width: 100%;
+    gap: 10px;
+  }
+
+  .authButtons a {
+    width: 100%;
+    display: block;
+  }
+
+  .authButtons a button {
+    width: 100% !important;
+    display: block !important;
+    text-align: center;
+  }
+}
