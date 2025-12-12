@@ -1,16 +1,61 @@
-# React + Vite
+# Shinely — Web Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Автор:** Магула Євгенія
+**Курс:** 3
+**Група:** 1 
 
-Currently, two official plugins are available:
+**Shinely** — це веб-застосунок для індивідуального підбору засобів по догляду за волоссям. Проект реалізовано на стеку технологій MongoDB, Express, React, Node.js.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Це фінальний проект, який включає адаптивний дизайн, авторизацію, роботу з базою даних та E2E тестування.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Демо версія
 
-## Expanding the ESLint configuration
+Сайт доступний онлайн:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Сайт (Frontend):** https://shinely.vercel.app/
+- **Сервер (Backend):** https://shinely-backend.onrender.com
+
+---
+
+## Технологічний стек
+
+### Frontend:
+
+- **React.js** (Vite)
+- **CSS Modules** (Адаптивна верстка, Mobile First)
+- **React Router** (Навігація)
+- **Context API** (Управління станом користувача)
+
+### Backend:
+
+- **Node.js** & **Express**
+- **MongoDB Atlas** (Хмарна база даних)
+- **Mongoose** (Робота з моделями даних)
+- **JWT** (Авторизація та захист маршрутів)
+
+### Testing:
+
+- **Cypress** — Компонентне тестування та End-to-End (E2E) тестування сценаріїв.
+
+---
+
+## Функціонал
+
+1.  **Авторизація:** Реєстрація, Логін, Вихід (JWT Tokens).
+2.  **Товари:** Динамічне завантаження каталогу з сервера.
+3.  **Вподобані:** Додавання товарів у список обраних (зберігається в БД).
+4.  **Адаптивність:** Коректне відображення на мобільних телефонах, планшетах та ноутбуках.
+
+---
+## Локальний запуск (Installation)
+
+Щоб запустити проект на своєму комп'ютері:
+
+### 1. Клонування
+
+```bash
+git clone https://github.com/yevheniamag/shinely.git
+cd shinely
+```
